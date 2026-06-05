@@ -1361,48 +1361,75 @@ var WKEYS = ['day','night','pool','fog','roof'];
 
 /* ── World Specials ── */
 var WORLD_SPECIALS = {
-  day:{plants:[],zombies:[]},
-  night:{
+  day:{
     plants:[
-      {img:'spore_shroom',name:'Puff-shroom',role:'Free mushroom (25☀️), sleeps at day',type:'p'},
-      {img:'fume_shroom',name:'Fume-shroom',role:'Hits all zombies in lane through obstacles',type:'p'},
-      {img:'ice_shroom',name:'Ice-shroom',role:'Freezes ALL zombies on screen instantly',type:'p'},
-      {img:'magnet_shroom',name:'Magnet-shroom',role:'Removes metal from zombies instantly',type:'p'},
-      {img:'coffee_bean',name:'Coffee Bean',role:'Wakes sleeping mushrooms for daytime use',type:'p'}
+      {img:'p_sunflower',name:'Sunflower',role:'Core economy — 25 sun every 24 seconds passively',type:'p'},
+      {img:'p_peashooter',name:'Peashooter',role:'Basic auto-attacker — 20 damage per pea',type:'p'},
+      {img:'p_wallnut',name:'Wall-nut',role:'Defensive barrier — stops all movement in lane',type:'p'},
+      {img:'p_cherry',name:'Cherry Bomb',role:'One-use area explosive — kills all in 3×3 instantly',type:'p'},
+      {img:'p_snowpea',name:'Snow Pea',role:'Damage + 50% slow simultaneously',type:'p'},
+      {img:'p_chomper',name:'Chomper',role:'Instant kill any zombie — 42s chew time',type:'p'},
+      {img:'p_potato',name:'Potato Mine',role:'25 sun trap — arms in 15s, kills on contact',type:'p'}
     ],
     zombies:[
-      {img:'jack_zombie',name:'Jack-in-the-Box',role:'Randomly explodes — high area damage',type:'z'},
-      {img:'gargantuar',name:'Gargantuar',role:'Strongest zombie — throws Imp at 50% HP',type:'z'}
+      {img:'z_basic',name:'Basic Zombie',role:'Template enemy — dangerous in groups',type:'z'},
+      {img:'z_cone',name:'Conehead Zombie',role:'Two-layer health — introduces armor mechanic',type:'z'},
+      {img:'z_pole',name:'Pole Vaulting Zombie',role:'Jumps over first plant — one-time bypass',type:'z'},
+      {img:'z_newspaper',name:'Newspaper Zombie',role:'Event-driven state machine — doubles speed when newspaper destroyed',type:'z'}
+    ]},
+  night:{
+    plants:[
+      {img:'spore_shroom',name:'Puff-shroom',role:'Free mushroom — costs 0 sun, sleeps during the day',type:'p'},
+      {img:'fume_shroom',name:'Fume-shroom',role:'Emits fumes through obstacles — hits all zombies in lane',type:'p'},
+      {img:'ice_shroom',name:'Ice-shroom',role:'Freezes ALL zombies on screen instantly — area freeze',type:'p'},
+      {img:'magnet_shroom',name:'Magnet-shroom',role:'Removes metal armor from zombies — counters Buckethead',type:'p'},
+      {img:'coffee_bean',name:'Coffee Bean',role:'Wakes sleeping mushrooms — lets them work during day',type:'p'}
+    ],
+    zombies:[
+      {img:'z_basic',name:'Basic Zombie',role:'Spawns from gravestones anywhere on grid',type:'z'},
+      {img:'z_bucket',name:'Buckethead Zombie',role:'Highest HP standard zombie — heavy tank',type:'z'},
+      {img:'jack_zombie',name:'Jack-in-the-Box',role:'Randomly explodes with no warning — high area damage',type:'z'},
+      {img:'gargantuar',name:'Gargantuar',role:'Strongest zombie — throws Imp at 50% HP behind defense',type:'z'}
     ]},
   pool:{
     plants:[
-      {img:'lily_pad',name:'Lily Pad',role:'Required platform before planting in water',type:'p'},
-      {img:'cattail',name:'Cattail',role:'Auto-tracks any zombie across all lanes',type:'p'}
+      {img:'lily_pad',name:'Lily Pad',role:'Prerequisite dependency — must place before any plant in water',type:'p'},
+      {img:'cattail',name:'Cattail',role:'Auto-tracks zombies across all 5 lanes — homing spikes',type:'p'},
+      {img:'p_wallnut',name:'Wall-nut',role:'Blocks zombie movement in water lanes too',type:'p'},
+      {img:'p_snowpea',name:'Snow Pea',role:'Slows aquatic zombies — crowd control in water lanes',type:'p'}
     ],
     zombies:[
-      {img:'dolphin_zombie',name:'Dolphin Rider',role:'Jumps over first plant using dolphin',type:'z'},
-      {img:'zomboni',name:'Zomboni',role:'Creates ice trails — Bobsled Teams follow',type:'z'}
+      {img:'dolphin_zombie',name:'Dolphin Rider',role:'Jumps over first plant using dolphin — water bypass',type:'z'},
+      {img:'zomboni',name:'Zomboni',role:'Crushes plants + creates ice trail — Bobsled Teams follow',type:'z'},
+      {img:'z_bucket',name:'Buckethead Zombie',role:'Heaviest standard zombie — needs sustained firepower',type:'z'}
     ]},
   fog:{
     plants:[
-      {img:'plantern',name:'Plantern',role:'Illuminates radius — reveals fog zombies',type:'p'},
-      {img:'cactus',name:'Cactus',role:'Hits ground and balloon zombies with spikes',type:'p'},
-      {img:'spore_shroom',name:'Puff-shroom',role:'Free mushroom — essential for fog economy',type:'p'}
+      {img:'plantern',name:'Plantern',role:'Illuminates a radius — reveals hidden zombies in the fog',type:'p'},
+      {img:'lily_pad',name:'Lily Pad',role:'Required platform for water lanes — prerequisite dependency',type:'p'},
+      {img:'cattail',name:'Cattail',role:'Auto-tracks zombies across all lanes — useful blind defense',type:'p'},
+      {img:'cactus',name:'Cactus',role:'Anti-air + ground spikes — works in water lanes too',type:'p'}
     ],
     zombies:[
-      {img:'gargantuar',name:'Gargantuar',role:'Strongest zombie — throws Imp at 50% HP',type:'z'}
+      {img:'z_basic',name:'Basic Zombie',role:'Hidden by fog until dangerously close',type:'z'},
+      {img:'z_bucket',name:'Buckethead Zombie',role:'Invisible tank — extremely dangerous in fog',type:'z'},
+      {img:'dolphin_zombie',name:'Dolphin Rider',role:'Water-lane bypass — hard to detect in fog',type:'z'},
+      {img:'gargantuar',name:'Gargantuar',role:'Strongest zombie — even harder in fog conditions',type:'z'}
     ]},
   roof:{
     plants:[
-      {img:'cactus',name:'Cactus',role:'Lobbed spikes work on roof slope — anti-air too',type:'p'}
+      {img:'p_sunflower',name:'Sunflower',role:'Economy backbone — needed for sun in every roof level',type:'p'},
+      {img:'p_wallnut',name:'Wall-nut + Flower Pot',role:'Every tile needs Flower Pot first — Wall-nut blocks zombie movement',type:'p'},
+      {img:'cactus',name:'Cactus',role:'Lobbed spikes arc over the roof slope — essential attacker here',type:'p'},
+      {img:'p_chomper',name:'Chomper',role:'Instant kill works on roof — place behind Wall-nuts',type:'p'}
     ],
     zombies:[
-      {img:'zombot',name:'Zombot (Dr. Zomboss)',role:'FINAL BOSS — Level 5-10, attacks with fireball, iceball, zombie drops',type:'z'},
-      {img:'bungee_zombie',name:'Bungee Zombie',role:'Drops from sky — steals plants',type:'z'},
-      {img:'propeller_zombie',name:'Propeller Zombie',role:'Flies over ALL plants — air unit',type:'z'},
-      {img:'ladder_zombie',name:'Ladder Zombie',role:'Places ladder over Wall-nut',type:'z'},
+      {img:'zombot',name:'Zombot (Dr. Zomboss)',role:'FINAL BOSS — fireball, iceball, zombie drops, catapult',type:'z'},
+      {img:'bungee_zombie',name:'Bungee Zombie',role:'Drops from sky — steals plants directly',type:'z'},
+      {img:'propeller_zombie',name:'Propeller Zombie',role:'Flies over ALL ground plants — needs anti-air',type:'z'},
+      {img:'ladder_zombie',name:'Ladder Zombie',role:'Places ladder over Wall-nut — permanent bypass',type:'z'},
       {img:'gargantuar',name:'Gargantuar',role:'Strongest zombie — throws Imp at 50% HP',type:'z'},
-      {img:'gatling_zombie',name:'Catapult Zombie',role:'Launches basketballs along full lanes',type:'z'}
+      {img:'gatling_zombie',name:'Catapult Zombie',role:'Launches basketballs along full lanes from vehicle',type:'z'}
     ]}
 };
 
