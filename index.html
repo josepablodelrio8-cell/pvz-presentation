@@ -397,7 +397,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 
 /* ══ Custom Cursor ══ */
 *,*::before,*::after{cursor:none!important;}
-#cursor-leaf,#cursor-brain{position:fixed;top:0;left:0;width:32px;height:32px;pointer-events:none;z-index:99999;font-size:22px;display:flex;align-items:center;justify-content:center;transform:translate(-50%,-50%);filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));will-change:transform;line-height:1;}
+@media (hover: hover) and (pointer: fine) {
+  #cursor-leaf,#cursor-brain{position:fixed;top:0;left:0;width:32px;height:32px;pointer-events:none;z-index:99999;font-size:22px;display:flex;align-items:center;justify-content:center;transform:translate(-50%,-50%);filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));will-change:transform;line-height:1;}
+}
+@media (hover: none), (pointer: coarse) {
+  #cursor-leaf,#cursor-brain,#cursor-trail{display:none!important;}
+}
 #cursor-brain{display:none;}
 #cursor-trail{position:fixed;width:8px;height:8px;border-radius:50%;background:rgba(127,255,0,.55);pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:transform .12s,opacity .2s;}
 #cursor-trail.brain-mode{background:rgba(239,68,68,.55);}
@@ -418,11 +423,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
 .special-card.zombie-card-s{border-color:rgba(239,68,68,.3);background:rgba(40,5,5,.6);}
 .special-card.zombie-card-s:hover{border-color:rgba(239,68,68,.7);box-shadow:0 8px 20px rgba(239,68,68,.15);}
 .special-card img{height:clamp(50px,9vw,72px);width:auto;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6));display:block;margin:0 auto 6px;}
+.special-card.zombie-card-s img{}
 .special-card-name{font-family:'Fredoka One',cursive;font-size:clamp(.58rem,1.2vw,.72rem);color:#e2e8f0;margin-bottom:3px;line-height:1.2;}
 .special-card-role{font-size:clamp(.5rem,1vw,.6rem);color:#94a3b8;line-height:1.3;}
 .special-card.plant-card-s .special-card-name{color:#7fff00;}
 .special-card.zombie-card-s .special-card-name{color:#fca5a5;}
-.special-badge{position:absolute;top:5px;right:5px;font-size:.45rem;font-weight:900;border-radius:4px;padding:1px 4px;}
+.special-badge{position:absolute;bottom:5px;right:5px;font-size:.42rem;font-weight:900;border-radius:4px;padding:1px 4px;letter-spacing:.3px;}
 .special-badge.p{background:rgba(92,184,0,.3);color:#7fff00;}
 .special-badge.z{background:rgba(239,68,68,.3);color:#fca5a5;}
 
@@ -843,6 +849,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
   #cursor-leaf, #cursor-brain, #cursor-trail { display: none !important; }
   *, *::before, *::after { cursor: auto !important; }
 }
+
+
+/* Special card name always visible above badge */
+.special-card { padding-bottom: 22px !important; }
+.special-card-name { margin-bottom: 2px; }
+.special-card-role { margin-bottom: 0; font-size: clamp(.48rem,.9vw,.58rem); }
 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
