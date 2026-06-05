@@ -694,6 +694,149 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif
   border-radius: 50% !important;
 }
 
+
+/* ══════════════════════════════════════
+   PC LAYOUT FIX — Full screen usage
+══════════════════════════════════════ */
+
+/* ── Menu background covers full screen ── */
+#s-menu { overflow: hidden; }
+.menu-bg-img {
+  position: absolute !important;
+  inset: 0 !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ── Menu content: Dave+zombie LEFT, buttons RIGHT, centered vertically ── */
+@media (min-width: 768px) {
+  /* Main content wrapper */
+  .dave-area {
+    bottom: clamp(10%, 15%, 20%) !important;
+  }
+
+  /* Tombstone buttons — higher on PC */
+  .tomb-menu {
+    top: 42% !important;
+    transform: translateY(-50%) !important;
+    right: clamp(3%, 5vw, 10%) !important;
+    width: clamp(160px, 20vw, 240px) !important;
+  }
+
+  /* ── Boss screen — no empty space ── */
+  #s-boss { overflow-y: auto !important; }
+  .boss-scroll {
+    max-width: 1100px !important;
+    margin: 0 auto !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+  }
+  .boss-l, .boss-r {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  .boss-hero {
+    max-height: 180px !important;
+  }
+
+  /* ── Victory — no empty space ── */
+  .vict-scroll {
+    max-width: 1100px !important;
+    margin: 0 auto !important;
+  }
+  .vcards {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 14px !important;
+  }
+  .sw-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  /* ── World detail — fill space ── */
+  .wd-body { flex-direction: row !important; }
+  .wd-main { flex: 1 !important; max-width: none !important; }
+  .wd-side { width: 260px !important; flex-shrink: 0 !important; }
+
+  /* ── Quiz — centered, not stretched ── */
+  .quiz-scroll {
+    max-width: 860px !important;
+    margin: 0 auto !important;
+  }
+  .q-opts { grid-template-columns: 1fr 1fr !important; }
+
+  /* ── Almanac — better proportions ── */
+  .alm-body { overflow: hidden !important; }
+  .alm-list { width: 200px !important; }
+  .alm-detail { flex: 1 !important; overflow-y: auto !important; }
+  .pd-card, .zd-card { max-width: 660px !important; margin: 0 auto !important; }
+
+  /* ── Map — center and space worlds ── */
+  .map-scroll { max-width: 1000px !important; margin: 0 auto !important; }
+  .road {
+    max-width: 900px !important;
+    gap: 24px !important;
+    justify-content: center !important;
+  }
+  .wnode-circle {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  /* ── Nav — better spacing ── */
+  #nav { padding: 0 16px !important; gap: 6px !important; }
+}
+
+@media (min-width: 1200px) {
+  .tomb-menu { width: 260px !important; }
+  .boss-scroll { max-width: 1200px !important; }
+  .vict-scroll { max-width: 1200px !important; }
+  .pd-card, .zd-card { max-width: 700px !important; }
+}
+
+/* ── SPEED FIX: Remove all animation delays that cause lag ── */
+/* Disable stagger animations that block rendering */
+.panel        { animation: none !important; }
+.vcard        { animation: none !important; }
+.bcard        { animation: none !important; }
+.qcard        { animation: none !important; }
+.special-card { animation: none !important; }
+.zcard-mini   { animation: none !important; }
+.alm-item     { animation: none !important; }
+
+/* Keep only hover transitions — instant on load, smooth on interact */
+.panel:hover, .vcard:hover, .bcard:hover {
+  transform: translateY(-2px);
+  transition: transform .15s ease, box-shadow .15s ease !important;
+}
+
+/* Portal float: keep but faster */
+.wnode-circle {
+  animation: portalFloat 2.5s ease-in-out infinite,
+             portalRing   2.5s ease-in-out infinite !important;
+}
+
+/* Screen transitions: instant, no delay */
+.scr.active > * {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Dave bob: keep, it's nice */
+.dave-img { animation: dBob 2s ease-in-out infinite !important; }
+
+/* Nav hover: instant response */
+.nb { transition: all .12s ease !important; }
+.nb:hover { transform: translateY(-1px) scale(1.03) !important; }
+
+/* Button press: snappy */
+.tm-btn { transition: all .1s ease !important; }
+.q-opt  { transition: all .12s ease !important; }
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
@@ -1159,9 +1302,7 @@ var ZOMBIES = [
   {id:'zombot',img:'zombot',name:{en:'Zombot (Dr. Zomboss)',es:'Zombot (Dr. Zomboss)'},hp:{en:'Massive',es:'Masiva'},spd:{en:'N/A',es:'N/A'},world:{en:'Roof — Level 5-10',es:'Techo — Nivel 5-10'},
    desc:{en:'The Zombot is a colossal robot piloted by Dr. Zomboss — the main antagonist. It fills the entire right side of the screen in the final level. From a software perspective, Dr. Zomboss is a finite state machine with randomized outputs, cycling through 4 attack patterns while managing zombie drops as a parallel secondary system.',es:'El Zombot es un robot colosal pilotado por el Dr. Zomboss — el antagonista principal. Llena todo el lado derecho de la pantalla en el nivel final. Desde la perspectiva del software, el Dr. Zomboss es una máquina de estados finitos con salidas aleatorias, ciclando entre 4 patrones de ataque mientras gestiona caídas de zombies como sistema secundario paralelo.'},
    abilities:{en:['Fireball — destroys all plants in a wide area instantly','Iceball — freezes all plants in a 3×3 zone, stopping attacks','Zombie Drop — releases reinforcements directly behind your defense line','Catapult Zombies — vehicles lobbing basketballs along full lanes'],es:['Bola de Fuego — destruye todas las plantas en área amplia instantáneamente','Bola de Hielo — congela todas las plantas en zona 3×3','Lluvia Zombie — suelta refuerzos directamente detrás de tu línea de defensa','Zombies Catapulta — vehículos lanzando balones por carriles completos']}},
-  {id:'zombot',img:'zombot',name:{en:'Zombot (Dr. Zomboss)',es:'Zombot (Dr. Zomboss)'},hp:{en:'Massive',es:'Masiva'},spd:{en:'Stationary',es:'Estático'},world:{en:'Roof — Level 5-10',es:'Techo — Nivel 5-10'},
-   desc:{en:'The Zombot is the colossal robot piloted by Dr. Zomboss in the final stage. It fills the entire right side of the screen and is the most complex AI in the game — a finite state machine with randomized attack outputs running a parallel zombie drop system.',es:'El Zombot es el robot colosal pilotado por el Dr. Zomboss en la etapa final. Llena todo el lado derecho de la pantalla y es la IA más compleja del juego — una máquina de estados finitos con salidas de ataque aleatorizadas que ejecuta un sistema paralelo de caída de zombies.'},
-   abilities:{en:['Fireball — destroys all plants in a wide area instantly','Iceball — freezes all plants in a 3×3 zone','Zombie Drop — releases reinforcements behind your defense line','Catapult Zombies — vehicles lobbing basketballs along full lanes'],es:['Bola de Fuego — destruye todas las plantas en área amplia instantáneamente','Bola de Hielo — congela todas las plantas en zona 3×3','Lluvia Zombie — suelta refuerzos detrás de tu línea de defensa','Zombies Catapulta — vehículos que lanzan balones por carriles completos']}},
+  
   {id:'jack_zombie',img:'jack_zombie',name:{en:'Jack-in-the-Box Zombie',es:'Zombie Caja Sorpresa'},hp:{en:'Low',es:'Baja'},spd:{en:'Normal',es:'Normal'},world:{en:'Night',es:'Noche'},
    desc:{en:'Carries a jack-in-the-box that randomly explodes with no warning. The explosion destroys all plants in a large area — unpredictable area burst damage.',es:'Lleva una caja de sorpresa que explota aleatoriamente sin aviso. La explosión destruye todas las plantas en un área grande — daño explosivo de área impredecible.'},
    abilities:{en:['Box explodes randomly — unpredictable timing, no warning','Explosion destroys all plants in large area instantly','Priority target: eliminate before the box detonates'],es:['La caja explota aleatoriamente — sin aviso ni tiempo predecible','La explosión destruye todas las plantas en área grande','Objetivo prioritario: eliminarlo antes de que detone la caja']}}
@@ -1614,11 +1755,7 @@ document.addEventListener('keydown',function(e){
 
 /* ── Anime.js Screen Animations ── */
 function animeScreenIn(id){
-  if(typeof anime==='undefined')return;
-  var el=document.getElementById(id);if(!el)return;
-  var targets=el.querySelectorAll('.panel,.vcard,.bcard,.qcard,.wnode,.alm-item,.pd-card,.zd-card,.gcard,.how-to,.tl-item,.uitem,.sw-card,.special-card');
-  if(!targets.length)return;
-  anime({targets:targets,opacity:[0,1],translateY:[16,0],scale:[0.97,1],duration:380,delay:anime.stagger(48),easing:'easeOutQuad'});
+  /* Disabled stagger — causes lag. Anime.js used only for portal float */
 }
 
 /* ── Intro ── */
